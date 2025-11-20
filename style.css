@@ -5,51 +5,51 @@
     box-sizing: border-box;
 }
 
-body {
-    background: #f4f7ff;
-    font-family: "Inter", sans-serif;
+/* BODY FULL CENTER (NO SCROLL BUG) */
+html, body {
+    height: 100%;
+}
 
-    width: 100%;
-    min-height: 100vh;
+body {
+    background: #eef2ff;
+    font-family: "Inter", sans-serif;
 
     display: flex;
     justify-content: center;
-    align-items: flex-start;
+    align-items: center;
 
-    padding: 30px 16px;
+    padding: 20px;
 }
 
 /* MAIN CARD */
 .container {
-    background: #ffffff;
-    padding: 30px 26px;
-
     width: 100%;
-    max-width: 470px;        /* LAPTOP & MOBILE WIDE */
-    min-width: 330px;        /* iPhone me chhota nahi hoga */
+    max-width: 420px;      /* PERFECT LOGIN SIZE */
+    background: white;
+    padding: 28px 24px;
+    border-radius: 18px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.12);
 
-    border-radius: 22px;
-    box-shadow: 0 8px 30px rgba(0,0,0,0.15);
-
-    margin-top: 20px;
+    /* CRITICAL FIX: PREVENT TINY LOOK ON PHONE */
+    transform: scale(1.2);
+    transform-origin: center;
 }
 
 /* TITLE */
 h2 {
     text-align: center;
-    font-size: 24px;
-    font-weight: 800;
+    font-size: 22px;
+    font-weight: 700;
     margin-bottom: 20px;
-    color: #1c2b6f;
 }
 
 /* FILE INPUT */
 #fileInput {
     width: 100%;
-    padding: 16px;
+    padding: 14px;
+    border: 2px dashed #4c6fff;
     border-radius: 10px;
-    border: 2px dashed #4976ff;
-    background: #eef2ff;
+    background: #f5f7ff;
     margin-bottom: 20px;
     font-size: 15px;
 }
@@ -57,35 +57,39 @@ h2 {
 /* BOX */
 .box {
     background: #f8f9ff;
-    padding: 20px;
-    border-radius: 16px;
+    padding: 18px;
+    border-radius: 14px;
     border-left: 6px solid #4976ff;
 }
 
-/* BUTTONS */
+/* BUTTON */
 button {
     width: 100%;
     padding: 15px;
     margin-top: 12px;
-    background: #4976ff;
-    color: white;
     border: none;
     border-radius: 12px;
     font-size: 16px;
     font-weight: 600;
+    background: #4976ff;
+    color: #fff;
 }
 
-/* MOBILE BOOST */
-@media(max-width: 480px) {
+
+/* MOBILE FIX */
+@media (max-width: 480px) {
+
+    body {
+        padding: 10px;
+    }
 
     .container {
-        max-width: 95%;      /* MOBILE ME FULLER */
-        min-width: 95%;      /* SMALL SCREEN ME CARD CHHOTA NAHO */
-        padding: 24px 20px;
+        max-width: 90%;
+        transform: scale(1.35);    /* MAKE IT BIG ON MOBILE */
     }
 
     h2 {
-        font-size: 22px;
+        font-size: 20px;
     }
 
     button {
@@ -94,14 +98,10 @@ button {
     }
 }
 
-/* LAPTOP BOOST */
-@media(min-width: 1024px) {
+/* LAPTOP BIGGER */
+@media (min-width: 1024px) {
     .container {
-        max-width: 520px;     /* LAPTOP PAR THODA BADA */
-        padding: 35px;
-    }
-
-    h2 {
-        font-size: 26px;
+        max-width: 480px;
+        transform: scale(1.15);
     }
 }
