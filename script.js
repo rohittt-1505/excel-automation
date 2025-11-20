@@ -112,5 +112,27 @@ function download(data, filename) {
     const ws = XLSX.utils.json_to_sheet(data);
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
-    XLSX.writeFile(wb, filename);
+
+    // Convert workbook to array buffer
+    const wbout = XLSX.write(wb, {
+        bookType: "xlsx",
+        type: "array"
+    });
+
+    // Create file blob (Netlify + iPhone safe)
+    const blob = new Blob([wbout], {
+        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    });
+
+    // Create temporary download link
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = filename;
+    document.body.appendChild(link);
+    link.click();
+
+    // Cleanup
+    document.body.removeChild(link);
+    URL.revokeObjectURL(link.href);
 }
+
