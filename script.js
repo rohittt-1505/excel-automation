@@ -165,7 +165,10 @@ async function processFile(file) {
         // ignore rows with empty or unexpected action
     }
 
-    log.innerText = `Rows assigned - Add: ${rowsAdd.length}, Modify: ${rowsMod.length}, Delete: ${rowsDel.length}`;
+    log.innerText = `Rows assigned - 
+    Addition: ${rowsAdd.length}
+    Modification: ${rowsMod.length},
+    Deletion: ${rowsDel.length}`;
 
     // If internal templates not loaded, fallback: infer headers for each template from original headers
     if (!additionHeaders) additionHeaders = originalHeaders.slice();
