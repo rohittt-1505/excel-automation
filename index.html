@@ -1,40 +1,44 @@
-<!DOCTYPE html>
-<html>
-
+<!doctype html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Excel Template Conversion Tool</title>
-
-    <!-- Stylesheet -->
-    <link rel="stylesheet" href="style.css">
-
-    <!-- SheetJS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Excel Template Conversion Tool</title>
+  <link rel="stylesheet" href="style.css" />
+  <!-- SheetJS -->
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 </head>
-
 <body>
-    <div class="container">
+  <div class="container">
+    <header>
+      <h1>Excel Template Conversion Tool</h1>
+    </header>
 
-        <h2>Excel Template Conversion Tool</h2>
+    <main>
+      <div class="card">
+        <label class="file-label">
+          <input id="file-input" type="file" accept=".xlsx, .xls" />
+          <span>Select Original Template (Excel)</span>
+        </label>
 
-        <input type="file" id="fileInput" accept=".xlsx, .xls" />
-
-        <div class="loading" id="loadingText">Please upload file...</div>
-
-        <br>
-
-        <div class="box">
-            <h3>Download Output Templates</h3>
-
-            <button id="btnAddition" disabled>Download Addition Template</button>
-            <button id="btnModification" disabled>Download Modification Template</button>
-            <button id="btnDeletion" disabled>Download Deletion Template</button>
+        <div class="buttons">
+          <button id="process-btn" class="btn primary" disabled>Process & Generate</button>
         </div>
 
-    </div>
+        <div id="download-area" class="download-area hidden">
+          <h3>Downloads</h3>
+          <div class="download-buttons">
+            <a id="dl-add" class="btn" download="Template_for_Addition.xlsx">Download Template_for_Addition.xlsx</a>
+            <a id="dl-mod" class="btn" download="Modification_Template.xlsx">Download Modification_Template.xlsx</a>
+            <a id="dl-del" class="btn" download="Template_for_Deletion.xlsx">Download Template_for_Deletion.xlsx</a>
+          </div>
+          <div id="log" class="log"></div>
+        </div>
+      </div>
+    </main>
 
-    <!-- External Script -->
-    <script src="script.js"></script>
+  </div>
+
+  <script src="script.js"></script>
 </body>
-
 </html>
