@@ -17,6 +17,7 @@ const deletionColumns = modificationColumns;
 
 let additionData = [], modificationData = [], deletionData = [];
 
+
 document.getElementById("fileInput").addEventListener("change", (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -39,6 +40,13 @@ function processFile(file) {
         const sheet = workbook.Sheets[workbook.SheetNames[0]];
         const rows = XLSX.utils.sheet_to_json(sheet, { defval: "" });
 
+        // ⭐ VALIDATION - Action column must exist
+        if (!rows[0] || !("Action" in rows[0])) {
+            document.getElementById("loadingText").style.display = "none";
+            alert("❌ Error: 'Action' column is missing in the uploaded Excel file.");
+            return;
+        }
+
         processData(rows);
     };
 
@@ -50,9 +58,26 @@ function processData(rows) {
     modificationData = [];
     deletionData = [];
 
-    rows.forEach((row) => {
-        const action = (row["Action"] || "").trim().toUpperCase();
+    for (let row of rows) {
 
+        const actionRaw = row["Action"];
+        const action = (actionRaw || "").trim().toUpperCase();
+
+        // ⭐ VALIDATION - Action is empty
+        if (!actionRaw || action === "") {
+            alert("❌ Error: Some rows have empty 'Action' value. Please check your file.");
+            document.getElementById("loadingText").style.display = "none";
+            return;
+        }
+
+        // ⭐ VALIDATION - Invalid Action code
+        if (!["A", "C", "T"].includes(action)) {
+            alert(`❌ Error: Invalid Action value '${actionRaw}' found. Allowed values: A, C, T.`);
+            document.getElementById("loadingText").style.display = "none";
+            return;
+        }
+
+        // Process valid actions
         if (action === "A") additionData.push(map(row, additionColumns));
         else if (action === "C") modificationData.push(map(row, modificationColumns));
         else if (action === "T") {
@@ -60,7 +85,7 @@ function processData(rows) {
             if (!d["Date of Leaving"]) d["Date of Leaving"] = "";
             deletionData.push(d);
         }
-    });
+    }
 
     enableButtons();
     document.getElementById("loadingText").style.display = "none";
